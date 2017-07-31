@@ -1,6 +1,6 @@
 <?php
 class ProductDB {
-    public static function getProductsByCategory($category_id) {
+    public function getProductsByCategory($category_id) {
         $db = Database::getDB();
 
         $category = CategoryDB::getCategory($category_id);
@@ -26,7 +26,7 @@ class ProductDB {
         return $products;
     }
 
-    public static function getProduct($product_id) {
+    public function getProduct($product_id) {
         $db = Database::getDB();
         $query = 'SELECT * FROM products
                   WHERE productID = :product_id';
@@ -46,7 +46,7 @@ class ProductDB {
         return $product;
     }
 
-    public static function deleteProduct($product_id) {
+    public function deleteProduct($product_id) {
         $db = Database::getDB();
         $query = 'DELETE FROM products
                   WHERE productID = :product_id';
@@ -56,7 +56,7 @@ class ProductDB {
         $statement->closeCursor();
     }
 
-    public static function addProduct($product) {
+    public function addProduct($product) {
         $db = Database::getDB();
 
         $category_id = $product->getCategory()->getID();
