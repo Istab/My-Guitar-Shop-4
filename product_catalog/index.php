@@ -7,6 +7,7 @@ require('../model/product.php');
 require('../model/product_db.php');
 
 $productDB = new ProductDB();
+$categoryDB = new CategoryDB();
 
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
@@ -23,13 +24,13 @@ if ($action == 'list_products') {
         $category_id = 1;
     }
 
-    $current_category = CategoryDB::getCategory($category_id);
-    $categories = CategoryDB::getCategories();
+    $current_category = $categoryDB->getCategory($category_id);
+    $categories = $categoryDB->getCategories();
     $products = $productDB->getProductsByCategory($category_id);
 
     include('product_list.php');
 } else if ($action == 'view_product') {
-    $categories = CategoryDB::getCategories();
+    $categories = $categoryDB->getCategories();
 
     $product_id = filter_input(INPUT_GET, 'product_id', 
             FILTER_VALIDATE_INT);   

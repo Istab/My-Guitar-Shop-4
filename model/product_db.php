@@ -2,8 +2,9 @@
 class ProductDB {
     public function getProductsByCategory($category_id) {
         $db = Database::getDB();
+        $categoryDB = new CategoryDB();
 
-        $category = CategoryDB::getCategory($category_id);
+        $category = $categoryDB->getCategory($category_id);
 
         $query = 'SELECT * FROM products
                   WHERE products.categoryID = :category_id
@@ -28,6 +29,8 @@ class ProductDB {
 
     public function getProduct($product_id) {
         $db = Database::getDB();
+        $categoryDB = new CategoryDB();
+
         $query = 'SELECT * FROM products
                   WHERE productID = :product_id';
         $statement = $db->prepare($query);
@@ -36,7 +39,8 @@ class ProductDB {
         $row = $statement->fetch();
         $statement->closeCursor();
     
-        $category = CategoryDB::getCategory($row['categoryID']);
+        $category = $categoryDB->getCategory($row['categoryID']);
+
         $product = new Product();
         $product->setCategory($category);
         $product->setCode($row['productCode']);
